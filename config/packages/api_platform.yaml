@@ -1,5 +1,6 @@
 api_platform:
-    title: Canoe
+    title: LabProto
+    description: Prototype
     version: 1.0.0
     formats:
         jsonld: ['application/ld+json']
