@@ -4,7 +4,7 @@ namespace App\Tests;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Entity\Company;
-use App\Entity\Fund;
+use App\Entity\Patient;
 use App\Tests\Factory\CompanyFactory;
 use App\Tests\Factory\FundFactory;
 use Zenstruck\Foundry\Test\Factories;
@@ -26,7 +26,7 @@ class FundTest extends ApiTestCase {
 
         // Asserts that the returned JSON is a superset of this one
         $this->assertJsonContains([
-            '@context' => '/api/contexts/Fund',
+            '@context' => '/api/contexts/Patient',
             '@id' => '/api/funds',
             '@type' => 'hydra:Collection',
             'hydra:totalItems' => 100,
@@ -60,8 +60,8 @@ class FundTest extends ApiTestCase {
         $this->assertResponseStatusCodeSame(201);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         $this->assertJsonContains([
-            '@context' => '/api/contexts/Fund',
-            '@type' => 'Fund',
+            '@context' => '/api/contexts/Patient',
+            '@type' => 'Patient',
             'name' => '0099740915',
         ]);
         $this->assertMatchesRegularExpression('~^/api/funds/\d+$~', $response->toArray()['@id']);
@@ -107,7 +107,7 @@ class FundTest extends ApiTestCase {
 
         $client = static::createClient();
         // findIriBy allows to retrieve the IRI of an item by searching for some of its properties.
-        $iri = $this->findIriBy(Fund::class, ['name' => '9781344037075']);
+        $iri = $this->findIriBy(Patient::class, ['name' => '9781344037075']);
 
         // Use the PATCH method here to do a partial update
         $client->request('PATCH', $iri, [
@@ -130,22 +130,22 @@ class FundTest extends ApiTestCase {
         FundFactory::createOne(['name' => '9781344037075']);
 
         $client = static::createClient();
-        $iri = $this->findIriBy(Fund::class, ['name' => '9781344037075']);
+        $iri = $this->findIriBy(Patient::class, ['name' => '9781344037075']);
 
         $client->request('DELETE', $iri);
 
         $this->assertResponseStatusCodeSame(204);
         $this->assertNull(
         // Through the container, you can access all your services from the Tests, including the ORM, the mailer, remote API clients...
-            static::getContainer()->get('doctrine')->getRepository(Fund::class)->findOneBy(['name' => '9781344037075'])
+            static::getContainer()->get('doctrine')->getRepository(Patient::class)->findOneBy(['name' => '9781344037075'])
         );
     }
 
     public function testDuplicateWarning(): void {
         FundFactory::createOne(['name' => '9781344037075']);
 
-        /** @var Fund $fund */
-        $fund = static::getContainer()->get('doctrine')->getRepository(Fund::class)->findOneBy(['name' => '9781344037075']);
+        /** @var Patient $fund */
+        $fund = static::getContainer()->get('doctrine')->getRepository(Patient::class)->findOneBy(['name' => '9781344037075']);
         $companyIri = $this->findIriBy(Company::class, ['id' => $fund->getManager()]);
 
         $response = static::createClient()->request('POST', '/api/funds', ['json' => [

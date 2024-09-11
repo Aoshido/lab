@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Fund;
+use App\Entity\Patient;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ObjectManager;
@@ -17,7 +17,7 @@ class GetDuplicateFunds extends AbstractController {
     }
 
     public function __invoke(): array {
-        $fundsRepository = $this->objectManager->getRepository(Fund::class);
+        $fundsRepository = $this->objectManager->getRepository(Patient::class);
         $fundsWithDuplicates = $fundsRepository->createQueryBuilder('f')
             ->select('MIN(f.id)')
             ->where('f.duplicateFund IS NOT NULL')

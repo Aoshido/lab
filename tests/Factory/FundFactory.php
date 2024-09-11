@@ -2,30 +2,30 @@
 
 namespace App\Tests\Factory;
 
-use App\Entity\Fund;
+use App\Entity\Patient;
 use App\Repository\FundRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
 
 /**
- * @extends ModelFactory<Fund>
+ * @extends ModelFactory<Patient>
  *
- * @method        Fund|Proxy                     create(array|callable $attributes = [])
- * @method static Fund|Proxy                     createOne(array $attributes = [])
- * @method static Fund|Proxy                     find(object|array|mixed $criteria)
- * @method static Fund|Proxy                     findOrCreate(array $attributes)
- * @method static Fund|Proxy                     first(string $sortedField = 'id')
- * @method static Fund|Proxy                     last(string $sortedField = 'id')
- * @method static Fund|Proxy                     random(array $attributes = [])
- * @method static Fund|Proxy                     randomOrCreate(array $attributes = [])
+ * @method        Patient|Proxy                     create(array|callable $attributes = [])
+ * @method static Patient|Proxy                     createOne(array $attributes = [])
+ * @method static Patient|Proxy                     find(object|array|mixed $criteria)
+ * @method static Patient|Proxy                     findOrCreate(array $attributes)
+ * @method static Patient|Proxy                     first(string $sortedField = 'id')
+ * @method static Patient|Proxy                     last(string $sortedField = 'id')
+ * @method static Patient|Proxy                     random(array $attributes = [])
+ * @method static Patient|Proxy                     randomOrCreate(array $attributes = [])
  * @method static FundRepository|RepositoryProxy repository()
- * @method static Fund[]|Proxy[]                 all()
- * @method static Fund[]|Proxy[]                 createMany(int $number, array|callable $attributes = [])
- * @method static Fund[]|Proxy[]                 createSequence(iterable|callable $sequence)
- * @method static Fund[]|Proxy[]                 findBy(array $attributes)
- * @method static Fund[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
- * @method static Fund[]|Proxy[]                 randomSet(int $number, array $attributes = [])
+ * @method static Patient[]|Proxy[]                 all()
+ * @method static Patient[]|Proxy[]                 createMany(int $number, array|callable $attributes = [])
+ * @method static Patient[]|Proxy[]                 createSequence(iterable|callable $sequence)
+ * @method static Patient[]|Proxy[]                 findBy(array $attributes)
+ * @method static Patient[]|Proxy[]                 randomRange(int $min, int $max, array $attributes = [])
+ * @method static Patient[]|Proxy[]                 randomSet(int $number, array $attributes = [])
  */
 final class FundFactory extends ModelFactory
 {
@@ -60,12 +60,12 @@ final class FundFactory extends ModelFactory
     protected function initialize(): self
     {
         return $this
-            // ->afterInstantiate(function(Fund $fund): void {})
+            // ->afterInstantiate(function(Patient $fund): void {})
         ;
     }
 
     protected static function getClass(): string
     {
-        return Fund::class;
+        return Patient::class;
     }
 }

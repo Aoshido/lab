@@ -2,23 +2,23 @@
 
 namespace App\Repository;
 
-use App\Entity\Fund;
+use App\Entity\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Fund>
+ * @extends ServiceEntityRepository<Patient>
  *
- * @method Fund|null find($id, $lockMode = null, $lockVersion = null)
- * @method Fund|null findOneBy(array $criteria, array $orderBy = null)
- * @method Fund[]    findAll()
- * @method Fund[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Patient|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Patient|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Patient[]    findAll()
+ * @method Patient[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class FundRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Fund::class);
+        parent::__construct($registry, Patient::class);
     }
 
 }

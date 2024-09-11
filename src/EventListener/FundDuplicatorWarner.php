@@ -3,23 +3,23 @@
 // src/EventListener/UserChangedNotifier.php
 namespace App\EventListener;
 
-use App\Entity\Fund;
+use App\Entity\Patient;
 use App\Message\PossibleDuplicate;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-#[AsEntityListener(event: Events::postPersist, method: 'postPersist', entity: Fund::class)]
+#[AsEntityListener(event: Events::postPersist, method: 'postPersist', entity: Patient::class)]
 class FundDuplicatorWarner {
 
     public function __construct(private MessageBusInterface $bus) {
     }
 
-    public function postPersist(Fund $fund, PostPersistEventArgs $args): void {
+    public function postPersist(Patient $fund, PostPersistEventArgs $args): void {
         // Just check for ONE duplicate, if there are more the consumer will handle it
         $duplicate = $args->getObjectManager()
-            ->getRepository(Fund::class)
+            ->getRepository(Patient::class)
             ->findOneBy([
                 'name' => $fund->getName()
             ]);

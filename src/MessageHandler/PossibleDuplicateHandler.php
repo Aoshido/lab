@@ -2,7 +2,7 @@
 
 namespace App\MessageHandler;
 
-use App\Entity\Fund;
+use App\Entity\Patient;
 use App\Message\PossibleDuplicate;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -17,7 +17,7 @@ class PossibleDuplicateHandler {
 
     public function __invoke(PossibleDuplicate $message) {
         $this->logger->info($message->getContent());
-        $fundRepository = $this->objectManager->getRepository(Fund::class);
+        $fundRepository = $this->objectManager->getRepository(Patient::class);
         $originalFund = $fundRepository->find($message->getFundId());
 
         $duplicates = $fundRepository
@@ -39,7 +39,7 @@ class PossibleDuplicateHandler {
         $originalFund->setDuplicateFund($firstDuplicate);
 
         // This will also set the ID of the first duplicate to itself so we know it has duplicates
-        /** @var Fund $duplicate */
+        /** @var Patient $duplicate */
         foreach ($duplicates as $duplicate){
             $duplicate->setDuplicateFund($firstDuplicate);
             $this->objectManager->persist($duplicate);
