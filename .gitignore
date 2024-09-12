@@ -19,3 +19,6 @@ supervisord.log
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+/frontend/frontend/node_modules
+

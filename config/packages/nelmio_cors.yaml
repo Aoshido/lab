@@ -1,10 +1,13 @@
 nelmio_cors:
     defaults:
-        origin_regex: true
-        allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
-        allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
+        allow_origin: ['*'] # Replace with the domain of your frontend if needed
         allow_headers: ['Content-Type', 'Authorization']
+        allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
         expose_headers: ['Link']
         max_age: 3600
     paths:
-        '^/': null
+        '^/api/': # Adjust this path to match your API endpoints
+            allow_origin: ['*'] # Replace '*' with your Vue frontend URL (like http://localhost:8080)
+            allow_headers: ['Content-Type', 'Authorization']
+            allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+            max_age: 3600

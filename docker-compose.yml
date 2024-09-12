@@ -15,6 +15,16 @@ services:
     networks:
       - symfony-net
 
+### Vue.js Frontend Service ###
+  frontend:
+    build:
+      context: ./frontend
+    container_name: vue-frontend
+    ports:
+      - "8080:8080"  # Expose Vue port to localhost
+    networks:
+      - symfony-net
+
 ###> doctrine/doctrine-bundle ###
   database:
     image: postgres:${POSTGRES_VERSION:-15}-alpine
