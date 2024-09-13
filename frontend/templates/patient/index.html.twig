@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+</head>
+<body>
+<h1>Patients</h1>
+<ul>
+    {% for patient in patients %}
+        <li>{{ patient.name }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

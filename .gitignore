@@ -10,6 +10,17 @@
 supervisord.log
 ###< symfony/framework-bundle ###
 
+###> frontend/symfony/framework-bundle ###
+frontend/.env.local
+frontend/.env.local.php
+frontend/.env.*.local
+frontend/config/secrets/prod/prod.decrypt.private.php
+frontend/public/bundles/
+frontend/var/
+frontend/vendor/
+frontend/supervisord.log
+###< symfony/framework-bundle ###
+
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
