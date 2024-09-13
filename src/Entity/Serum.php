@@ -45,12 +45,8 @@ class Serum
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(['serum:read', 'serum:write'])]
-    private ?string $name = null;
-
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['serum:read', 'serum:write', 'patient:write'])]
+    #[Groups(['serum:read', 'serum:write', 'patient:write', 'patient:read'])]
     #[Context([
         DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'
     ])]
@@ -76,18 +72,6 @@ class Serum
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getPatient(): ?Patient

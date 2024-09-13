@@ -98,4 +98,15 @@ class Patient
 
         return $this;
     }
+
+    // Define a new group for extraction dates
+    #[Groups(['patient:read:with_dates'])]
+    public function getSerumExtractionDates(): array
+    {
+        return $this->serums->map(function (Serum $serum) {
+            return [
+                'extraction_date' => $serum->getExtractionDate()->format('Y-m-d'),
+            ];
+        })->toArray();
+    }
 }
