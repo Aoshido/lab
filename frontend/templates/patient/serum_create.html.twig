@@ -1,0 +1,38 @@
+{# templates/patient/serum_create.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Create Patient with Serum</h1>
+
+    <form method="POST" action="{{ path('serum_create') }}">
+        <div class="form-group">
+            <label for="name">Patient Name</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+
+        <div class="form-check">
+            <input type="checkbox" id="custom_date" name="custom_date" class="form-check-input" onchange="toggleDateInput()">
+            <label class="form-check-label" for="custom_date">Specify serum extraction date</label>
+        </div>
+
+        <div class="form-group" id="date-group" style="display:none;">
+            <label for="date">Serum Extraction Date</label>
+            <input type="datetime-local" id="date" name="date" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Create Patient</button>
+    </form>
+
+    <script>
+        function toggleDateInput() {
+            var checkBox = document.getElementById('custom_date');
+            var dateGroup = document.getElementById('date-group');
+            if (checkBox.checked) {
+                dateGroup.style.display = 'block';
+            } else {
+                dateGroup.style.display = 'none';
+            }
+        }
+    </script>
+{% endblock %}
