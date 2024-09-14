@@ -5,7 +5,18 @@
 {% block body %}
     <div class="container mt-4">
         <h1 class="mb-4">Patients List</h1>
-        <div class="table-responsive">
+
+        <form method="get" action="{{ path('patients_list') }}" class="mb-4">
+            <div class="form-group">
+                <input type="text" name="search_name" value="{{ app.request.query.get('search_name') }}" placeholder="Search by name" class="form-control" />
+            </div>
+            <div class="form-group mt-2">
+                <input type="text" name="search_dni" value="{{ app.request.query.get('search_dni') }}" placeholder="Search by DNI" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Search</button>
+        </form>
+
+        <div class="table-responsive mb-4">
             <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
@@ -21,7 +32,7 @@
                         <td>{{ patient.name }}</td>
                         <td>
                             {% if patient.serums is defined and patient.serums|length > 0 %}
-                                {% set latest_serum = patient.serums|sort((a, b) => a.date <=> b.date)|last %}
+                                {% set latest_serum = patient.serums|sort((a, b) => a.extractionDate <=> b.extractionDate)|last %}
                                 {{ latest_serum.extractionDate|date('Y-m-d') }}
                             {% else %}
                                 N/A
@@ -35,6 +46,30 @@
                 {% endfor %}
                 </tbody>
             </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                {% if pagination.first %}
+                    <a href="{{ path('patients_list', { page: pagination.first, search_name: app.request.query.get('search_name'), search_dni: app.request.query.get('search_dni') }) }}" class="btn btn-outline-primary">First</a>
+                {% endif %}
+                {% if pagination.prev %}
+                    <a href="{{ path('patients_list', { page: pagination.prev, search_name: app.request.query.get('search_name'), search_dni: app.request.query.get('search_dni') }) }}" class="btn btn-outline-primary">Previous</a>
+                {% endif %}
+            </div>
+
+            <div>
+                Page {{ currentPage }} of {{ pagination.last }}
+            </div>
+
+            <div>
+                {% if pagination.next %}
+                    <a href="{{ path('patients_list', { page: pagination.next, search_name: app.request.query.get('search_name'), search_dni: app.request.query.get('search_dni') }) }}" class="btn btn-outline-primary">Next</a>
+                {% endif %}
+                {% if pagination.last %}
+                    <a href="{{ path('patients_list', { page: pagination.last, search_name: app.request.query.get('search_name'), search_dni: app.request.query.get('search_dni') }) }}" class="btn btn-outline-primary">Last</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

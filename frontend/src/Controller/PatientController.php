@@ -19,15 +19,66 @@ class PatientController extends AbstractController
         $this->httpClient = $httpClient;
     }
 
+
     #[Route('/patients', name: 'patients_list')]
-    public function patientsList(): Response
+    public function patientsList(Request $request): Response
     {
-        $response = $this->httpClient->request('GET', 'http://php/api/api/patients');
-        $patients = $response->toArray()['hydra:member'];
+        $searchName = $request->query->get('search_name');
+        $searchDni = $request->query->get('search_dni');
+        $page = $request->query->getInt('page', 1);
+
+        $url = 'http://php/api/api/patients';
+        $queryParams = [];
+
+        if ($searchName) {
+            $queryParams['search[name]'] = $searchName;
+        }
+
+        if ($searchDni) {
+            $queryParams['search[dni]'] = $searchDni;
+        }
+
+        if ($page > 1) {
+            $queryParams['page'] = $page;
+        }
+
+        if ($queryParams) {
+            $url .= '?' . http_build_query($queryParams);
+        }
+
+        $response = $this->httpClient->request('GET', $url);
+        $data = $response->toArray();
+
+        $patients = $data['hydra:member'] ?? [];
+        $pagination = $this->parsePagination($data);
 
         return $this->render('patient/index.html.twig', [
             'patients' => $patients,
+            'pagination' => $pagination,
+            'currentPage' => $page,
         ]);
+    }
+
+    private function parsePagination(array $data): array
+    {
+        $pagination = [];
+        if (isset($data['hydra:view'])) {
+            $view = $data['hydra:view'];
+            $pagination['first'] = $this->getPageFromUrl($view['hydra:first'] ?? null);
+            $pagination['last'] = $this->getPageFromUrl($view['hydra:last'] ?? null);
+            $pagination['next'] = $this->getPageFromUrl($view['hydra:next'] ?? null);
+            $pagination['prev'] = $this->getPageFromUrl($view['hydra:prev'] ?? null);
+        }
+        return $pagination;
+    }
+
+    private function getPageFromUrl(?string $url): ?int
+    {
+        if ($url) {
+            parse_str(parse_url($url, PHP_URL_QUERY), $query);
+            return $query['page'] ?? null;
+        }
+        return null;
     }
 
 
