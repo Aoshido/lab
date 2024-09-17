@@ -17,7 +17,7 @@ The stack is as follows:
 
 ## Schema used for this project:
 
-![image](https://github.com/user-attachments/assets/0b8bffe6-4caa-44b2-8ecf-3ddf43c89976)
+![image](https://github.com/user-attachments/assets/67e9b984-bcb1-4464-bfe1-6caf7e2de0aa)
 
 
 ## Instructions to run the project:
