@@ -25,3 +25,9 @@ services:
 
     # Alias Doctrine\Persistence\ObjectManager to the default entity manager service
     Doctrine\Persistence\ObjectManager: '@doctrine.orm.default_entity_manager'
+
+    App\DataPersister\PatientDataPersister:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'api_platform.state.processor', priority: 99 }

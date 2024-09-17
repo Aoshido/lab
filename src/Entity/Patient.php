@@ -10,6 +10,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\DataPersister\PatientDataPersister;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,7 +23,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
             uriTemplate: '/patients/{id}',
             requirements: ['id' => '\d+'],
         ),
-        new Post(),
+        new Post(
+            processor: PatientDataPersister::class // Explicitly set the processor for POST https://api-platform.com/docs/core/state-processors/
+        ),
         new GetCollection(),
         new Put(),
         new Delete(),
@@ -50,6 +53,22 @@ class Patient
     #[ORM\OneToMany(mappedBy: 'patient', targetEntity: Serum::class, cascade: ['persist', 'remove'])]
     #[Groups(['patient:read', 'patient:write'])]
     private Collection $serums;
+
+    #[ORM\Column(length: 255, unique: true)]
+    #[Groups(['patient:read', 'patient:write'])]
+    private ?string $dni = null;
+
+    public function getDni(): ?string
+    {
+        return $this->dni;
+    }
+
+    public function setDni(string $dni): static
+    {
+        $this->dni = $dni;
+
+        return $this;
+    }
 
     public function __construct() {
         $this->serums = new ArrayCollection();
