@@ -88,6 +88,7 @@ class PatientController extends AbstractController
         // Check if the form was submitted
         if ($request->isMethod('POST')) {
             $name = $request->request->get('name');
+            $dni = $request->request->get('dni');
             $dateCheckbox = $request->request->get('custom_date');
 
             if ($dateCheckbox) {
@@ -101,6 +102,7 @@ class PatientController extends AbstractController
 
             $payload = [
                 "name" => $name,
+                "dni" => $dni,
                 "serums" => [
                     [
                         "extractionDate" => $date
@@ -116,7 +118,6 @@ class PatientController extends AbstractController
             if ($response->getStatusCode() === 201) {
                 return $this->redirectToRoute('patients_list');
             } else {
-                dump($response);die();
                 return new Response('Error: Unable to create patient', 500);
             }
         }
