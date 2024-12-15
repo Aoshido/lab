@@ -19,7 +19,7 @@ class PatientController extends AbstractController
         $this->httpClient = $httpClient;
     }
 
-
+    #[Route('/', name: 'patients_list_default')]
     #[Route('/patients', name: 'patients_list')]
     public function patientsList(Request $request): Response
     {
