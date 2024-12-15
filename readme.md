@@ -17,7 +17,8 @@ The stack is as follows:
 
 ## Schema used for this project:
 
-![image](https://github.com/Aoshido/canoe/assets/1039259/5af48ba9-4e07-467f-9a76-6baeefc3dda2)
+![image](https://github.com/user-attachments/assets/67e9b984-bcb1-4464-bfe1-6caf7e2de0aa)
+
 
 ## Tools required prior
 
