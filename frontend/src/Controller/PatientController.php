@@ -52,7 +52,7 @@ class PatientController extends AbstractController
         $patients = $data['hydra:member'] ?? [];
         $pagination = $this->parsePagination($data);
 
-        return $this->render('patient/index.html.twig', [
+        return $this->render('patient/list.html.twig', [
             'patients' => $patients,
             'pagination' => $pagination,
             'currentPage' => $page,

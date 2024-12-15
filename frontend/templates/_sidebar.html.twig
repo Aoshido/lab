@@ -3,33 +3,35 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('patients_list_default') }}">
         <div class="sidebar-brand-icon">
-            <i class="fas fa-laugh-wink"></i>
+            <i class="fas fa-syringe"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin 2</div>
+        <div class="sidebar-brand-text mx-3">Serum Revolution</div>
     </a>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    {#
+    <li class="nav-item {% block activeDashboardItem %}{% endblock %}">
         <a class="nav-link" href="{{ path('patients_list_default') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
     </li>
+    #}
 
     <!-- Nav Item - Patients -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('patients_list') }}">
+    <li class="nav-item {% if current_route == 'patients_list' %}active{% endif %}">
+    <a class="nav-link" href="{{ path('patients_list') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Patients</span>
         </a>
     </li>
 
     <!-- Nav Item - Serum Relationships -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('serum_create') }}">
+    <li class="nav-item {% if current_route == 'serum_create' %}active{% endif %}">
+    <a class="nav-link" href="{{ path('serum_create') }}">
             <i class="fas fa-fw fa-syringe"></i>
             <span>Create Patient-Serum</span>
         </a>
