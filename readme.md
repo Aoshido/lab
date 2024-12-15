@@ -19,6 +19,11 @@ The stack is as follows:
 
 ![image](https://github.com/Aoshido/canoe/assets/1039259/5af48ba9-4e07-467f-9a76-6baeefc3dda2)
 
+## Tools required prior
+
+- [Git](https://git-scm.com/downloads)
+- [Docker](https://www.docker.com/products/docker-desktop/)
+
 ## Instructions to run the project:
 
 - Clone the repository
