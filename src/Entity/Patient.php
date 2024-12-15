@@ -15,6 +15,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+
 
 #[ORM\Entity]
 #[ApiResource(
@@ -39,8 +42,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
 )]
 #[ApiFilter(OrderFilter::class, properties: ['name' => 'ASC'])] // api/patients.json?order[name]=desc
-class Patient
-{
+class Patient {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -48,6 +50,7 @@ class Patient
 
     #[ORM\Column(length: 255)]
     #[Groups(['patient:read', 'patient:write'])]
+    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'patient', targetEntity: Serum::class, cascade: ['persist', 'remove'])]
@@ -56,15 +59,14 @@ class Patient
 
     #[ORM\Column(length: 255, unique: true)]
     #[Groups(['patient:read', 'patient:write'])]
+    #[ApiFilter(SearchFilter::class, strategy: 'partial')]
     private ?string $dni = null;
 
-    public function getDni(): ?string
-    {
+    public function getDni(): ?string {
         return $this->dni;
     }
 
-    public function setDni(string $dni): static
-    {
+    public function setDni(string $dni): static {
         $this->dni = $dni;
 
         return $this;
@@ -74,13 +76,11 @@ class Patient
         $this->serums = new ArrayCollection();
     }
 
-    public function getSerums(): Collection
-    {
+    public function getSerums(): Collection {
         return $this->serums;
     }
 
-    public function addSerum(Serum $serum): static
-    {
+    public function addSerum(Serum $serum): static {
         if (!$this->serums->contains($serum)) {
             $this->serums[] = $serum;
             $serum->setPatient($this);
@@ -89,8 +89,7 @@ class Patient
         return $this;
     }
 
-    public function removeSerum(Serum $serum): static
-    {
+    public function removeSerum(Serum $serum): static {
         if ($this->serums->removeElement($serum)) {
             // set the owning side to null (unless already changed)
             if ($serum->getPatient() === $this) {
@@ -101,18 +100,15 @@ class Patient
         return $this;
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
+    public function getName(): ?string {
         return $this->name;
     }
 
-    public function setName(string $name): static
-    {
+    public function setName(string $name): static {
         $this->name = $name;
 
         return $this;
@@ -120,8 +116,7 @@ class Patient
 
     // Define a new group for extraction dates
     #[Groups(['patient:read:with_dates'])]
-    public function getSerumExtractionDates(): array
-    {
+    public function getSerumExtractionDates(): array {
         return $this->serums->map(function (Serum $serum) {
             return [
                 'extraction_date' => $serum->getExtractionDate()->format('Y-m-d'),

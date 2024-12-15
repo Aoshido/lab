@@ -12,34 +12,31 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 
-class PatientController extends AbstractController
-{
+class PatientController extends AbstractController {
     private $httpClient;
     private $baseApiUrl;
 
-    public function __construct(HttpClientInterface $httpClient,string $baseApiUrl)
-    {
+    public function __construct(HttpClientInterface $httpClient, string $baseApiUrl) {
         $this->httpClient = $httpClient;
         $this->baseApiUrl = $baseApiUrl;
     }
 
     #[Route('/', name: 'patients_list_default')]
     #[Route('/patients', name: 'patients_list')]
-    public function patientsList(Request $request): Response
-    {
-        $searchName = $request->query->get('search_name');
-        $searchDni = $request->query->get('search_dni');
+    public function patientsList(Request $request): Response {
+        $searchName = $request->query->get('name');
+        $searchDni = $request->query->get('dni');
         $page = $request->query->getInt('page', 1);
 
         $url = $this->baseApiUrl . 'patients';
         $queryParams = [];
 
         if ($searchName) {
-            $queryParams['search[name]'] = $searchName;
+            $queryParams['name'] = $searchName;
         }
 
         if ($searchDni) {
-            $queryParams['search[dni]'] = $searchDni;
+            $queryParams['dni'] = $searchDni;
         }
 
         if ($page > 1) {
@@ -49,7 +46,8 @@ class PatientController extends AbstractController
         if ($queryParams) {
             $url .= '?' . http_build_query($queryParams);
         }
-
+dump($queryParams);
+        dump($url);
         $response = $this->httpClient->request('GET', $url);
         $data = $response->toArray();
 
@@ -63,8 +61,7 @@ class PatientController extends AbstractController
         ]);
     }
 
-    private function parsePagination(array $data): array
-    {
+    private function parsePagination(array $data): array {
         $pagination = [];
         if (isset($data['hydra:view'])) {
             $view = $data['hydra:view'];
@@ -76,8 +73,7 @@ class PatientController extends AbstractController
         return $pagination;
     }
 
-    private function getPageFromUrl(?string $url): ?int
-    {
+    private function getPageFromUrl(?string $url): ?int {
         if ($url) {
             parse_str(parse_url($url, PHP_URL_QUERY), $query);
             return $query['page'] ?? null;
@@ -87,8 +83,7 @@ class PatientController extends AbstractController
 
 
     #[Route('/serum', name: 'serum_create')]
-    public function serumCreate(Request $request): Response
-    {
+    public function serumCreate(Request $request): Response {
         // Check if the form was submitted
         if ($request->isMethod('POST')) {
             $name = $request->request->get('name');

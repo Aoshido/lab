@@ -38,8 +38,7 @@ use Symfony\Component\Serializer\Annotation\Context;
     ],
 )]
 #[ApiFilter(OrderFilter::class, properties: ['name' => 'ASC'])] // api/serums.json?order[name]=desc
-class Serum
-{
+class Serum {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -57,30 +56,25 @@ class Serum
     #[Groups(['serum:read', 'serum:write'])]
     private ?Patient $patient = null;
 
-    public function getExtractionDate(): ?\DateTimeInterface
-    {
+    public function getExtractionDate(): ?\DateTimeInterface {
         return $this->extractionDate;
     }
 
-    public function setExtractionDate(?\DateTimeInterface $extractionDate): static
-    {
+    public function setExtractionDate(?\DateTimeInterface $extractionDate): static {
         $this->extractionDate = $extractionDate;
 
         return $this;
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getPatient(): ?Patient
-    {
+    public function getPatient(): ?Patient {
         return $this->patient;
     }
 
-    public function setPatient(Patient $patient): static
-    {
+    public function setPatient(Patient $patient): static {
         $this->patient = $patient;
 
         return $this;

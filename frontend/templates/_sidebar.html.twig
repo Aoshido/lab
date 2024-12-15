@@ -1,7 +1,8 @@
 <!-- templates/_sidebar.html.twig -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('patients_list_default') }}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center"
+       href="{{ path('patients_list_default') }}">
         <div class="sidebar-brand-icon">
             <i class="fas fa-syringe"></i>
         </div>
@@ -23,7 +24,7 @@
 
     <!-- Nav Item - Patients -->
     <li class="nav-item {% if current_route == 'patients_list' %}active{% endif %}">
-    <a class="nav-link" href="{{ path('patients_list') }}">
+        <a class="nav-link" href="{{ path('patients_list') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Patients</span>
         </a>
@@ -31,7 +32,7 @@
 
     <!-- Nav Item - Serum Relationships -->
     <li class="nav-item {% if current_route == 'serum_create' %}active{% endif %}">
-    <a class="nav-link" href="{{ path('serum_create') }}">
+        <a class="nav-link" href="{{ path('serum_create') }}">
             <i class="fas fa-fw fa-syringe"></i>
             <span>Create Patient-Serum</span>
         </a>
